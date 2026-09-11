@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2A1E18" />
+  <meta name="description" content="Donde Zoe, cocina peruana en Buin. Carta, ubicación y reservas por WhatsApp." />
+  <title>Donde Zoe — Cocina peruana en Buin</title>
+
+  <!-- Tipografía: Fraunces (editorial, cálida) + Alegreya Sans (humanista y legible). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DONDE ZOE — Dirección de arte boutique
+       Una sola página, mobile-first, sin frameworks.
+       ========================================================= */
+
+    :root {
+      --ink: #2A1E18;
+      --paper: #F5EBDD;
+      --paper-2: #E8D7BE;
+      --cream: #FFF8EE;
+      --ochre: #C58A3A;
+      --terracotta: #A24A38;
+      --brick: #7F3A2E;
+      --olive: #68704A;
+      --olive-dark: #4E5637;
+      --charcoal: #302A25;
+      --muted: #786A60;
+      --line: rgba(42, 30, 24, .22);
+      --line-light: rgba(255, 248, 238, .20);
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "Alegreya Sans", ui-sans-serif, system-ui, sans-serif;
+      --max: 1240px;
+      --shadow: 0 28px 70px rgba(48, 34, 24, .16);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.55;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .12;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170' viewBox='0 0 170 170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E");
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--ochre); outline-offset: 4px; }
+
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: 1rem;
+      transform: translateY(-150%);
+      z-index: 10000;
+      background: var(--cream);
+      color: var(--ink);
+      padding: .7rem 1rem;
+      font-weight: 700;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .wrap { width: min(calc(100% - 2rem), var(--max)); margin-inline: auto; }
+    .eyebrow {
+      margin: 0 0 .85rem;
+      font-size: .76rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-weight: 700;
+    }
+    .serif { font-family: var(--serif); }
+
+    /* Header: simple, sólido, sin espectáculo innecesario. */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      padding: .65rem 1rem;
+      background: rgba(245, 235, 221, .94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mark {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+    }
+    .mark svg { width: 48px; height: 48px; }
+    .mark-mascot { width: 54px; height: 54px; object-fit: cover; border-radius: 16px 20px 14px 22px; border: 1px solid rgba(42,30,24,.18); box-shadow: 0 8px 22px rgba(42,30,24,.12); transform: rotate(-1.5deg); background: #fff; }
+    .mark-word { line-height: .9; }
+    .mark-word b { display: block; font-family: var(--serif); font-size: 1.28rem; font-weight: 700; }
+    .mark-word span { font-family: var(--serif); font-size: 1.18rem; font-style: italic; }
+
+    .nav-toggle {
+      border: 1px solid var(--line);
+      background: transparent;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .nav-toggle::before,
+    .nav-toggle::after {
+      content: "";
+      display: block;
+      width: 19px;
+      height: 1px;
+      background: var(--ink);
+      margin: 5px auto;
+      transition: transform .2s ease;
+    }
+    .nav-toggle[aria-expanded="true"]::before { transform: translateY(3px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"]::after { transform: translateY(-3px) rotate(-45deg); }
+
+    .nav {
+      position: fixed;
+      inset: 72px 0 auto;
+      display: none;
+      padding: 1.2rem 1rem 1.5rem;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav.is-open { display: grid; gap: .25rem; }
+    .nav a { padding: .8rem 0; font-weight: 600; }
+    .nav .nav-reserve { color: var(--terracotta); }
+
+    /* Hero roto y asimétrico. */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 4.5rem 0 3rem;
+      min-height: 86svh;
+      display: grid;
+      align-items: center;
+    }
+    .hero-grid { display: grid; gap: 2.2rem; }
+    .hero-copy { position: relative; z-index: 2; }
+    .hero h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(4.8rem, 18vw, 10.8rem);
+      line-height: .74;
+      letter-spacing: -.065em;
+      font-weight: 600;
+    }
+    .hero h1 span { display: block; }
+    .hero h1 .zoe { margin-left: 14vw; color: var(--terracotta); font-style: italic; }
+    .hero-lead {
+      margin: 2.2rem 0 0;
+      max-width: 34rem;
+      font-size: clamp(1.15rem, 4vw, 1.45rem);
+      line-height: 1.45;
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.5rem; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 1.15rem;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn--dark { background: var(--ink); color: var(--cream); }
+    .btn--red { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+    .btn--cream { border-color: rgba(255,255,255,.48); color: var(--cream); }
+
+    .hero-photo {
+      position: relative;
+      min-height: 420px;
+      margin-right: -1rem;
+      background: var(--paper-2);
+      clip-path: polygon(3% 1%, 98% 0, 100% 92%, 92% 100%, 0 96%, 1% 8%);
+      box-shadow: var(--shadow);
+    }
+
+    .photo-placeholder {
+      min-height: inherit;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      background: var(--paper-2);
+      color: var(--brick);
+      font-size: .85rem;
+      font-weight: 700;
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      text-align: center;
+      border: 1px dashed rgba(127, 58, 46, .52);
+    }
+    .photo-placeholder small {
+      display: block;
+      margin-top: .65rem;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: .9rem;
+    }
+
+    .stamp {
+      position: absolute;
+      right: 1rem;
+      bottom: 1.25rem;
+      width: 118px;
+      aspect-ratio: 1;
+      border: 2px solid var(--terracotta);
+      border-radius: 47% 53% 50% 44%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--terracotta);
+      font-family: var(--serif);
+      font-weight: 700;
+      transform: rotate(8deg);
+      background: rgba(245,235,221,.84);
+      box-shadow: inset 0 0 0 5px rgba(162,74,56,.08);
+    }
+
+    .scribble {
+      width: 150px;
+      height: 34px;
+      margin-top: .65rem;
+    }
+
+    /* Introducción editorial: bloques que se pisan. */
+    .manifesto { padding: 6rem 0 2rem; }
+    .manifesto-grid { display: grid; gap: 2rem; }
+    .manifesto-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(3.3rem, 10vw, 7.2rem);
+      line-height: .9;
+      letter-spacing: -.04em;
+    }
+    .brand-seal {
+      width: clamp(118px, 16vw, 172px);
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 28% 22% 30% 18%;
+      border: 1px solid rgba(42,30,24,.18);
+      box-shadow: 0 18px 44px rgba(42,30,24,.14);
+      transform: rotate(2deg);
+      justify-self: end;
+      align-self: start;
+      background:#fff;
+    }
+    .manifesto-note {
+      background: var(--olive);
+      color: var(--cream);
+      padding: 1.4rem;
+      transform: rotate(-1.2deg);
+      box-shadow: var(--shadow);
+    }
+    .manifesto-note strong {
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      line-height: 1.1;
+      display: block;
+      margin-bottom: .65rem;
+    }
+
+    /* Fotografía editorial en zigzag. */
+    .photo-essay { padding: 3rem 0 7rem; }
+    .photo-essay-grid { display: grid; gap: 1.2rem; }
+    .photo-card { min-height: 330px; position: relative; }
+    .photo-card:nth-child(2) { margin-left: 12vw; }
+    .photo-card:nth-child(3) { margin-right: 9vw; }
+    .photo-caption {
+      position: absolute;
+      left: .9rem;
+      bottom: .9rem;
+      max-width: 80%;
+      padding: .65rem .8rem;
+      background: var(--cream);
+      font-size: .8rem;
+      font-weight: 600;
+      transform: rotate(-.6deg);
+    }
+
+    /* Carta: diseño de libreta, no rejilla de cards. */
+    .menu-section {
+      padding: 6rem 0;
+      background: var(--ink);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-section::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -210px;
+      top: 100px;
+      border: 70px solid rgba(197,138,58,.14);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .menu-head {
+      display: grid;
+      gap: 1.3rem;
+      margin-bottom: 3.4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-head h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(4rem, 12vw, 8rem);
+      line-height: .82;
+      letter-spacing: -.05em;
+      max-width: 10ch;
+    }
+    .menu-head p { max-width: 37rem; color: #d8cbbb; }
+    .menu-jump {
+      display: flex;
+      gap: .45rem;
+      overflow-x: auto;
+      padding: 0 0 1rem;
+      scrollbar-width: thin;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-jump a {
+      flex: 0 0 auto;
+      border: 1px solid var(--line-light);
+      border-radius: 999px;
+      padding: .55rem .85rem;
+      font-size: .78rem;
+    }
+
+    .menu-book {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 3.5rem;
+      margin-top: 1.3rem;
+    }
+    .menu-category {
+      border-top: 1px solid var(--line-light);
+      padding-top: 1.4rem;
+      scroll-margin-top: 100px;
+    }
+    .menu-category h3 {
+      margin: 0 0 1.25rem;
+      font-family: var(--serif);
+      font-size: clamp(2.3rem, 7vw, 4.2rem);
+      color: #F4D9B4;
+      font-weight: 600;
+    }
+    .menu-list { display: grid; gap: 0; }
+    .menu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: baseline;
+      padding: .9rem 0;
+      border-bottom: 1px dashed rgba(255,248,238,.18);
+    }
+    .menu-item span:first-child { font-size: 1.05rem; }
+    .menu-item strong {
+      font-family: var(--serif);
+      color: #F1C786;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .menu-footnote { margin-top: 2rem; color: #a99a8b; font-size: .82rem; }
+
+    /* Reserva: bloque humano y funcional. */
+    .reservation {
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .reservation-grid { display: grid; gap: 2rem; }
+    .reservation-copy h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 11vw, 7rem);
+      line-height: .88;
+      letter-spacing: -.045em;
+    }
+    .reservation-copy p { max-width: 30rem; }
+    .reservation-card {
+      background: var(--cream);
+      padding: 1.2rem;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transform: rotate(.3deg);
+    }
+    .form-grid { display: grid; gap: 1rem; }
+    label { display: grid; gap: .4rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+    input, select, textarea {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      padding: .8rem 0;
+      border-radius: 0;
+      min-height: 46px;
+    }
+    textarea { min-height: 105px; resize: vertical; }
+    .form-note { margin: .8rem 0 0; font-size: .82rem; color: var(--muted); }
+    .form-status { min-height: 1.5em; margin-top: .8rem; font-weight: 700; color: var(--terracotta); }
+
+    /* Visita / contacto: banda final con dirección protagonista. */
+    .visit {
+      background: var(--terracotta);
+      color: #fff5e9;
+      padding: 5.5rem 0;
+    }
+    .visit-grid { display: grid; gap: 2rem; }
+    .visit h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(3.8rem, 13vw, 8rem);
+      line-height: .82;
+      letter-spacing: -.05em;
+    }
+    .address-card {
+      border-top: 1px solid rgba(255,255,255,.35);
+      padding-top: 1rem;
+    }
+    .address-card strong { display: block; font-family: var(--serif); font-size: 1.65rem; }
+
+    footer {
+      background: var(--charcoal);
+      color: #d9cdc1;
+      padding: 2.2rem 0 6rem;
+      font-size: .9rem;
+    }
+    .footer-grid { display: grid; gap: 1.5rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: .9rem 1.2rem; }
+
+    .mobile-whatsapp {
+      position: fixed;
+      left: 50%;
+      bottom: calc(1rem + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 90;
+      width: min(calc(100% - 2rem), 420px);
+      background: var(--olive-dark);
+      color: #fff;
+      min-height: 52px;
+      border-radius: 999px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(0,0,0,.24);
+    }
+
+    @media (min-width: 760px) {
+      .wrap { width: min(calc(100% - 4rem), var(--max)); }
+      .site-header { padding-inline: 2rem; }
+      .hero { padding: 5.6rem 0 4rem; }
+      .hero-grid { grid-template-columns: 1.1fr .9fr; align-items: center; }
+      .hero-photo { min-height: 620px; margin-right: -2rem; }
+      .hero h1 .zoe { margin-left: 5vw; }
+      .manifesto-grid { grid-template-columns: 1.2fr .8fr; align-items: end; }
+      .manifesto-note { margin-bottom: -4.5rem; }
+      .photo-essay { padding-top: 6rem; }
+      .photo-essay-grid { grid-template-columns: 1.1fr .8fr; grid-template-areas: "a b" "a c"; align-items: start; }
+      .photo-card:nth-child(1) { grid-area: a; min-height: 720px; }
+      .photo-card:nth-child(2) { grid-area: b; min-height: 330px; margin-left: 0; }
+      .photo-card:nth-child(3) { grid-area: c; min-height: 330px; margin-right: -3rem; }
+      .menu-head { grid-template-columns: 1fr .7fr; align-items: end; }
+      .menu-book { grid-template-columns: 1fr 1fr; column-gap: 4rem; }
+      .menu-category:nth-child(3n) { transform: translateY(2rem); }
+      .reservation-grid { grid-template-columns: .85fr 1.15fr; align-items: start; }
+      .reservation-card { padding: 2rem; }
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid .full { grid-column: 1 / -1; }
+      .visit-grid { grid-template-columns: 1.2fr .8fr; align-items: end; }
+      .footer-grid { grid-template-columns: 1fr auto; align-items: center; }
+    }
+
+    @media (min-width: 1020px) {
+      .nav-toggle { display: none; }
+      .nav {
+        position: static;
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+        padding: 0;
+        background: transparent;
+        border: 0;
+      }
+      .nav a { padding: .45rem .2rem; font-size: .94rem; }
+      .nav .nav-reserve {
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        padding: .65rem 1rem;
+      }
+      .mobile-whatsapp { display: none; }
+      footer { padding-bottom: 2.2rem; }
+    }
+
+
+    /* Fotografías reales de platos: encuadre respetuoso, sin filtros agresivos. */
+    .food-photo {
+      display:block; width:100%; height:100%; object-fit:cover; object-position:center;
+    }
+    .photo-card { overflow:hidden; }
+    .photo-card .food-frame { min-height: 360px; background:#d9c6ad; overflow:hidden; }
+    .hero-photo .food-photo { min-height: 460px; }
+    .photo-caption strong { font-family:var(--serif); font-size:1.18rem; }
+    .reference-note { margin:.75rem 0 0; font-size:.76rem; color:var(--muted); max-width:48rem; }
+    .dish-strip {
+      display:grid; grid-template-columns:1fr; gap:1rem; margin:2.4rem 0 3.5rem; align-items:end;
+    }
+    .dish-shot { margin:0; position:relative; background:#1d1713; overflow:hidden; min-height:300px; }
+    .dish-shot:nth-child(2) { min-height:380px; }
+    .dish-shot img { width:100%; height:100%; min-height:inherit; object-fit:cover; display:block; }
+    .dish-shot figcaption {
+      position:absolute; left:0; right:0; bottom:0; padding:3.2rem 1rem 1rem; color:#fff;
+      background:linear-gradient(transparent,rgba(24,17,13,.82)); font-weight:700;
+    }
+    .dish-shot small { display:block; font-weight:500; opacity:.82; }
+    .credits { background:#efe2d0; border-top:1px solid var(--line); padding:2rem 0; }
+    .credits details { max-width:900px; }
+    .credits summary { cursor:pointer; font-weight:700; }
+    .credits p { color:var(--muted); font-size:.78rem; line-height:1.55; }
+    @media (min-width: 800px) {
+      .dish-strip { grid-template-columns:.8fr 1.15fr .78fr; margin-left:-5vw; margin-right:-5vw; }
+      .dish-shot:first-child { transform:translateY(1.8rem) rotate(-1deg); }
+      .dish-shot:last-child { transform:translateY(-1.2rem) rotate(1deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <a href="#inicio" class="mark" aria-label="Donde Zoe, volver al inicio">
+      <img class="mark-mascot" src="img/marca/donde-zoe-mascota.png" alt="Ilustración oficial de Donde Zoe con cocinera y bandera peruana" width="150" height="150">
+      <span class="mark-word"><b>Donde</b><span>Zoe</span></span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Abrir navegación" aria-expanded="false" aria-controls="nav-principal"></button>
+    <nav class="nav" id="nav-principal" aria-label="Navegación principal">
+      <a href="#casa">La casa</a>
+      <a href="#carta">Carta</a>
+      <a href="#reserva">Reserva</a>
+      <a href="#visitanos">Cómo llegar</a>
+      <a class="nav-reserve" href="https://wa.me/56952250560" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Buin · cocina peruana</p>
+          <h1 id="hero-title"><span>Donde</span><span class="zoe">Zoe</span></h1>
+          <svg class="scribble" viewBox="0 0 160 34" aria-hidden="true"><path d="M5 20c35-14 78-17 146-5M17 27c38-9 80-9 127-4" fill="none" stroke="#C58A3A" stroke-width="2" stroke-linecap="round"/></svg>
+          <p class="hero-lead">Ceviches con filo, causas bien montadas, fondos criollos y platos de mar. En Manuel Rodríguez 362 la carta habla peruano sin disfrazarse.</p>
+          <div class="hero-cta">
+            <a class="btn btn--dark" href="#reserva">Preparar una reserva</a>
+            <a class="btn" href="#carta">Leer la carta</a>
+          </div>
+        </div>
+
+        <div class="hero-photo">
+          <img class="food-photo" src="https://upload.wikimedia.org/wikipedia/commons/2/27/Ceviche_at_Peru.jpg" alt="Ceviche peruano servido con cebolla, ají y acompañamientos tradicionales" width="1600" height="1067" fetchpriority="high">
+          <div class="stamp">SABOR<br>PERUANO</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto" id="casa">
+      <div class="wrap manifesto-grid">
+        <div>
+          <p class="eyebrow">01 · La casa</p>
+          <h2 class="manifesto-title">Perú servido<br>sin apuro.</h2>
+        </div>
+        <aside class="manifesto-note">
+          <img class="brand-seal" src="img/marca/donde-zoe-mascota.png" alt="Sello ilustrado de Donde Zoe" width="150" height="150" loading="lazy">
+          <strong>No hace falta inventarle una leyenda a la comida.</strong>
+          <p>La carta ya tiene carácter: reineta, salmón, pulpo, camarón, ají amarillo, tacu tacu, secos, causas y salteados. El oficio se cuenta mejor desde la cocina que desde una frase grandilocuente.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="photo-essay" aria-label="Platos peruanos de referencia">
+      <div class="wrap photo-essay-grid">
+        <figure class="photo-card">
+          <div class="food-frame"><img class="food-photo" src="https://upload.wikimedia.org/wikipedia/commons/1/13/Lomo_Salteado.jpg" alt="Lomo saltado peruano con carne, papas y verduras salteadas" loading="lazy" width="1600" height="1200"></div>
+          <figcaption class="photo-caption"><strong>Lomo saltado</strong><br>Fuego alto, carne, cebolla, tomate y ese cruce peruano-chifa que no necesita presentación.</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="food-frame"><img class="food-photo" src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Causa_Rellena.jpg" alt="Causa rellena peruana presentada en capas de papa amarilla" loading="lazy" width="1200" height="1800"></div>
+          <figcaption class="photo-caption"><strong>Causas</strong><br>Papa amarilla, ají, acidez y rellenos que cambian de carácter sin perder la base limeña.</figcaption>
+        </figure>
+        <figure class="photo-card">
+          <div class="food-frame"><img class="food-photo" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Jalea_mixta_14092010.JPG" alt="Jalea mixta peruana con pescado y mariscos fritos" loading="lazy" width="1600" height="1200"></div>
+          <figcaption class="photo-caption"><strong>Jalea mixta</strong><br>Crocante, generosa y hecha para llegar al centro de la mesa.</figcaption>
+        </figure>
+      </div>
+      <div class="wrap"><p class="reference-note">Fotografías gastronómicas de referencia del mismo tipo de plato, obtenidas de Wikimedia Commons con licencias abiertas. No se presentan como fotografías de la preparación exacta servida por Donde Zoe.</p></div>
+    </section>
+
+    <section class="menu-section" id="carta" aria-labelledby="menu-title">
+      <div class="wrap">
+        <div class="menu-head">
+          <div>
+            <p class="eyebrow">02 · Carta</p>
+            <h2 id="menu-title">Aquí se viene<br>a comer.</h2>
+          </div>
+          <div>
+            <p>La carta mantiene el protagonismo del nombre y el precio. Las imágenes acompañan solo algunos clásicos peruanos para dar contexto visual, sin fingir que son la presentación exacta de cocina.</p>
+            <a class="btn btn--cream" href="https://drive.google.com/file/d/1KsoGv30ublo9OYpET_wDb03OQp_zmEx8/view" target="_blank" rel="noopener">Abrir PDF oficial</a>
+          </div>
+        </div>
+
+        <nav class="menu-jump" aria-label="Secciones de la carta">
+          <a href="#frios">Fríos</a><a href="#especialidades">Especialidades</a><a href="#compartir">Para compartir</a><a href="#ensaladas">Ensaladas</a><a href="#causas">Causas</a><a href="#criollos">Criollos</a><a href="#otros">Otros</a>
+        </nav>
+
+        <div class="dish-strip" aria-label="Clásicos peruanos de la carta">
+          <figure class="dish-shot"><img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Tiradito.jpg" alt="Tiradito peruano de pescado en corte fino" loading="lazy" referrerpolicy="no-referrer"><figcaption>Tiradito <small>corte fino · ají amarillo · acidez</small></figcaption></figure>
+          <figure class="dish-shot"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Aj%C3%AD_de_gallina.jpg" alt="Ají de gallina peruano servido con arroz y acompañamientos tradicionales" loading="lazy" referrerpolicy="no-referrer"><figcaption>Ají de gallina <small>cremoso · ají amarillo · cocina criolla</small></figcaption></figure>
+          <figure class="dish-shot"><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Ceviche_at_Peru.jpg" alt="Ceviche peruano con pescado, cebolla y acompañamientos" loading="lazy" referrerpolicy="no-referrer"><figcaption>Ceviches <small>cítrico · mar · ají</small></figcaption></figure>
+        </div>
+
+        <div class="menu-book">
+          <section class="menu-category" id="frios"><h3>Platos fríos</h3><div class="menu-list">
+            <div class="menu-item"><span>Carpaccio de Reineta y Camarón</span><strong>$13.000</strong></div>
+            <div class="menu-item"><span>Carpaccio de Salmón</span><strong>$12.800</strong></div>
+            <div class="menu-item"><span>Pulpo al Ajo</span><strong>$13.000</strong></div>
+            <div class="menu-item"><span>Carpaccio de Atún</span><strong>$12.800</strong></div>
+            <div class="menu-item"><span>Ceviche de Camarones</span><strong>$13.500</strong></div>
+            <div class="menu-item"><span>Ceviche Carretillero</span><strong>$14.990</strong></div>
+            <div class="menu-item"><span>Ceviche Donde Zoe</span><strong>$14.990</strong></div>
+            <div class="menu-item"><span>Tiradito de Reineta al Ají Amarillo</span><strong>$12.500</strong></div>
+            <div class="menu-item"><span>Trilogía de Ceviches</span><strong>$25.900</strong></div>
+            <div class="menu-item"><span>Fuente de Ceviche Mixto de Atún o Salmón</span><strong>$24.990</strong></div>
+            <div class="menu-item"><span>Pulpo al Olivo</span><strong>$13.000</strong></div>
+            <div class="menu-item"><span>Ceviche Vegetariano</span><strong>$11.900</strong></div>
+          </div></section>
+
+          <section class="menu-category" id="especialidades"><h3>Especialidades de la casa</h3><div class="menu-list">
+            <div class="menu-item"><span>Recomendación del Chef</span><strong>$14.900</strong></div>
+            <div class="menu-item"><span>Ronda Marina</span><strong>$24.990</strong></div>
+            <div class="menu-item"><span>Fuente de Ceviche Mixto de Reineta</span><strong>$24.900</strong></div>
+            <div class="menu-item"><span>Tiradito de Reineta y Camarón</span><strong>$13.000</strong></div>
+            <div class="menu-item"><span>Dúo Marino</span><strong>$17.000</strong></div>
+          </div></section>
+
+          <section class="menu-category" id="compartir"><h3>Para compartir</h3><div class="menu-list">
+            <div class="menu-item"><span>Jalea Mixta Familiar</span><strong>$32.900</strong></div>
+            <div class="menu-item"><span>Jalea Mixta Asesina</span><strong>$32.900</strong></div>
+            <div class="menu-item"><span>Piqueo Donde Zoe</span><strong>$25.900</strong></div>
+            <div class="menu-item"><span>Pulpo a la Parrilla</span><strong>$18.900</strong></div>
+            <div class="menu-item"><span>Piqueo Mar Profundo</span><strong>$32.900</strong></div>
+          </div></section>
+
+          <section class="menu-category" id="ensaladas"><h3>Ensaladas</h3><div class="menu-list">
+            <div class="menu-item"><span>Ensalada Donde Zoe</span><strong>$11.900</strong></div>
+            <div class="menu-item"><span>Ensalada Especial</span><strong>$8.800</strong></div>
+            <div class="menu-item"><span>Ensalada de Mariscos</span><strong>$11.900</strong></div>
+          </div></section>
+
+          <section class="menu-category" id="causas"><h3>Causas</h3><div class="menu-list">
+            <div class="menu-item"><span>Causa de Pollo</span><strong>$10.500</strong></div>
+            <div class="menu-item"><span>Causa de Camarones</span><strong>$12.500</strong></div>
+            <div class="menu-item"><span>Causa de Pulpa de Jaiba</span><strong>$12.500</strong></div>
+            <div class="menu-item"><span>Causa de Pulpo al Olivo</span><strong>$12.500</strong></div>
+            <div class="menu-item"><span>Causa de Acevichada</span><strong>$14.000</strong></div>
+            <div class="menu-item"><span>Trilogía de Causas</span><strong>$19.900</strong></div>
+          </div></section>
+
+          <section class="menu-category" id="criollos"><h3>Platos criollos</h3><div class="menu-list">
+            <div class="menu-item"><span>Seco de Cordero</span><strong>$14.800</strong></div>
+            <div class="menu-item"><span>Seco de Vacuno</span><strong>$14.800</strong></div>
+            <div class="menu-item"><span>Tacu Tacu de Seco de Cordero</span><strong>$14.800</strong></div>
+            <div class="menu-item"><span>Saltado de Pollo</span><strong>$11.990</strong></div>
+            <div class="menu-item"><span>Tallarín Saltado de Carne</span><strong>$12.700</strong></div>
+            <div class="menu-item"><span>Lomo Saltado</span><strong>$12.990</strong></div>
+            <div class="menu-item"><span>Tallarín Saltado de Mariscos</span><strong>$12.500</strong></div>
+            <div class="menu-item"><span>Tallarín Saltado de Pollo</span><strong>$11.800</strong></div>
+            <div class="menu-item"><span>Tallarín al Pesto</span><strong>$13.800</strong></div>
+            <div class="menu-item"><span>Pinzas de Jaiba Apanadas</span><strong>$14.200</strong></div>
+            <div class="menu-item"><span>Filete a la Plancha</span><strong>$12.700</strong></div>
+            <div class="menu-item"><span>Filete a lo Macho</span><strong>$14.000</strong></div>
+            <div class="menu-item"><span>Filete en Salsa de Camarón</span><strong>$14.200</strong></div>
+            <div class="menu-item"><span>Filete Migñon con Puré</span><strong>$14.000</strong></div>
+            <div class="menu-item"><span>Pescado a lo Macho</span><strong>$13.500</strong></div>
+            <div class="menu-item"><span>Pescado en Salsa de Camarones</span><strong>$13.700</strong></div>
+            <div class="menu-item"><span>Pescado a la Meniere con Puré</span><strong>$13.200</strong></div>
+            <div class="menu-item"><span>Ají de Gallina</span><strong>$11.900</strong></div>
+          </div></section>
+
+          <section class="menu-category" id="otros"><h3>Otros</h3><div class="menu-list">
+            <div class="menu-item"><span>Papa a la Huancaína</span><strong>$8.900</strong></div>
+            <div class="menu-item"><span>Conchitas a la Parmesano</span><strong>$14.900</strong></div>
+            <div class="menu-item"><span>Causa a la Limeña</span><strong>$10.500</strong></div>
+            <div class="menu-item"><span>Ensalada de Palta</span><strong>$7.000</strong></div>
+          </div></section>
+        </div>
+        <p class="menu-footnote">Precios entregados para este rediseño. Conviene revisar el PDF oficial antes de publicar cambios de temporada.</p>
+      </div>
+    </section>
+
+    <section class="reservation" id="reserva" aria-labelledby="reservation-title">
+      <div class="wrap reservation-grid">
+        <div class="reservation-copy">
+          <p class="eyebrow">03 · Reserva</p>
+          <h2 id="reservation-title">Tu mesa,<br>sin vueltas.</h2>
+          <p>Completa los datos y la web abre WhatsApp con el mensaje listo. Tú revisas y envías; nada se manda automáticamente.</p>
+          <p><strong>Reservas:</strong> +56 9 5225 0560</p>
+        </div>
+
+        <form class="reservation-card" id="reservation-form" novalidate>
+          <div class="form-grid">
+            <label>Nombre completo<input id="name" name="name" autocomplete="name" required /></label>
+            <label>Teléfono<input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required /></label>
+            <label>Personas<input id="people" name="people" type="number" min="1" max="30" value="2" required /></label>
+            <label>Fecha<input id="date" name="date" type="date" required /></label>
+            <label>Hora<input id="time" name="time" type="time" required /></label>
+            <label>Motivo<select id="occasion" name="occasion"><option>Almuerzo</option><option>Cena</option><option>Cumpleaños</option><option>Aniversario</option><option>Reunión</option><option>Otro</option></select></label>
+            <label class="full">Comentario<textarea id="comment" name="comment" placeholder="Alergias, silla para niño, celebración, preferencia de mesa…"></textarea></label>
+            <div class="full"><button class="btn btn--red" type="submit">Preparar mensaje de reserva</button><p class="form-note">Se abrirá WhatsApp con los datos cargados. La reserva queda sujeta a confirmación del restaurante.</p><div id="form-status" class="form-status" role="status" aria-live="polite"></div></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="visit" id="visitanos">
+      <div class="wrap visit-grid">
+        <div>
+          <p class="eyebrow">04 · Buin</p>
+          <h2>Nos vemos<br>en la mesa.</h2>
+        </div>
+        <div class="address-card">
+          <strong>Manuel Rodríguez 362</strong>
+          <p>Buin · Región Metropolitana</p>
+          <p><a href="tel:+56952250560">+56 9 5225 0560</a><br><a href="https://www.instagram.com/dondezoe" target="_blank" rel="noopener">Instagram @dondezoe ↗</a></p>
+          <a class="btn btn--cream" href="https://www.google.com/maps/search/?api=1&query=Manuel+Rodriguez+362+Buin+Chile" target="_blank" rel="noopener">Abrir indicaciones</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <section class="credits" aria-label="Créditos de fotografías">
+    <div class="wrap">
+      <details>
+        <summary>Créditos de fotografías gastronómicas</summary>
+        <p>Ceviche peruano: Ministerio de la Producción del Perú — dominio público. Lomo saltado: PapiPijuan — CC BY-SA 4.0. Causa rellena: spersper — CC BY 2.0. Tiradito: Manuel González Olaechea — CC BY 3.0. Ají de gallina: Feralbt — CC BY-SA 3.0. Jalea mixta: Dtarazona — dominio público. Fuentes: Wikimedia Commons. Las imágenes son referenciales del plato y no fotografías oficiales de Donde Zoe.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div style="display:flex;align-items:center;gap:.75rem"><img src="img/marca/donde-zoe-mascota.png" alt="Donde Zoe" width="52" height="52" style="width:52px;height:52px;object-fit:cover;border-radius:14px"><span>Donde Zoe · Cocina peruana en Buin</span></div>
+      <div class="footer-links"><a href="#carta">Carta</a><a href="#reserva">Reservas</a><a href="https://www.instagram.com/dondezoe" target="_blank" rel="noopener">Instagram</a><a href="tel:+56952250560">Llamar</a></div>
+    </div>
+  </footer>
+
+  <a class="mobile-whatsapp" href="https://wa.me/56952250560" target="_blank" rel="noopener" aria-label="Abrir WhatsApp de Donde Zoe">WhatsApp · +56 9 5225 0560</a>
+
+  <script>
+    // Navegación móvil accesible.
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+    toggle?.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      nav.classList.toggle('is-open', !open);
+    });
+    nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('is-open');
+    }));
+
+    // Fecha mínima = hoy.
+    const dateInput = document.getElementById('date');
+    const today = new Date();
+    const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+    if (dateInput) dateInput.min = localToday;
+
+    // Reserva por WhatsApp: prepara el texto, nunca lo envía automáticamente.
+    const form = document.getElementById('reservation-form');
+    const status = document.getElementById('form-status');
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        status.textContent = 'Revisa los campos obligatorios antes de continuar.';
+        return;
+      }
+
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const people = document.getElementById('people').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const occasion = document.getElementById('occasion').value;
+      const comment = document.getElementById('comment').value.trim();
+
+      const text = [
+        'Hola Donde Zoe, quisiera solicitar una reserva:',
+        '',
+        `Nombre: ${name}`,
+        `Teléfono: ${phone}`,
+        `Personas: ${people}`,
+        `Fecha: ${date}`,
+        `Hora: ${time}`,
+        `Motivo: ${occasion}`,
+        comment ? `Comentario: ${comment}` : null,
+        '',
+        '¿Me confirman disponibilidad, por favor?'
+      ].filter(Boolean).join('\n');
+
+      status.textContent = 'Abriendo WhatsApp con tu solicitud…';
+      window.open(`https://wa.me/56952250560?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>

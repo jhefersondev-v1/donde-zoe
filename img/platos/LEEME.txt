@@ -1,0 +1,4 @@
+Estas fotos se descargan automaticamente al ejecutar DESCARGAR-IMAGENES.bat o SUBIR-A-GITHUB.bat.
+
+Son fotografias de referencia del mismo tipo de plato, con licencias abiertas de Wikimedia Commons.
+No son fotografias oficiales de los platos preparados por Donde Zoe.
